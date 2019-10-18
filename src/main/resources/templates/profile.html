@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" th:href="@{styles/header.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{styles/profile.css}">
+    <script src="webjars/jquery/3.3.1/jquery.min.js"></script>
+    <title>Быки и коровы - Профиль</title>
+</head>
+<body>
+
+<div th:replace="fragments/header :: header"></div>
+
+<div class="gameHistory">
+    <p id="stats"></p>
+    <br>
+    <p>История игр:</p>
+    <br>
+    <table id="gameHistoryTable">
+        <tr>
+            <th style="width: 37px">№</th>
+            <th style="width: 200px">Дата</th>
+            <th style="width: 180px">Количество ходов</th>
+        </tr>
+    </table>
+</div>
+
+<script>
+    $(function () {
+        $.getJSON('/profile/stats', function (data) {
+            if (data.gamesPlayed === 0) {
+                $('#stats').append('Завершено игр: 0' +
+                    '<br><br>Минимальное количество ходов: —' +
+                    '<br>Среднее количество ходов: —');
+            } else {
+                $('#stats').append('Завершено игр: ' + data.gamesPlayed +
+                    '<br><br>Минимальное количество ходов: ' + data.bestAttempts +
+                    '<br>Среднее количество ходов: ' + Math.round(data.averageAttempts * 10) / 10);
+            }
+        });
+
+        $.getJSON('/profile/gameHistory', function (data) {
+            $.each(data, function (key, game) {
+                $('#gameHistoryTable').append('<tr><td>' +
+                    (key + 1) + '</td><td>' +
+                    game.date + '</td><td>' +
+                    game.attempts + '</td></tr>');
+            });
+        });
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" th:href="@{styles/header.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{styles/index.css}">
+    <script src="webjars/jquery/3.3.1/jquery.min.js"></script>
+    <title>Быки и коровы - Главная</title>
+</head>
+<body>
+
+
+<!-- Стили и скрипты проверены в Safari и Google Chrome последних версий на Mac OS -->
+
+
+<div th:replace="fragments/header :: header"></div>
+
+<div class="numberOfMovesBlock">
+    <p>Попыток: </p>
+    <p id="attemptsLabel">0</p>
+</div>
+
+<div class="leftBlock">
+    <div class="pinBlock">
+        <div class="pin" id="pin1">•</div>
+        <div class="pin" id="pin2">•</div>
+        <div class="pin" id="pin3">•</div>
+        <div class="pin" id="pin4">•</div>
+    </div>
+
+    <p class="inputNumberLabel">Введите число:</p>
+
+    <table class="numberButtons">
+        <tr>
+            <td><a id="number1" onclick="inputNumber(1)">1</a></td>
+            <td><a id="number2" onclick="inputNumber(2)">2</a></td>
+            <td><a id="number3" onclick="inputNumber(3)">3</a></td>
+        </tr>
+        <tr>
+            <td><a id="number4" onclick="inputNumber(4)">4</a></td>
+            <td><a id="number5" onclick="inputNumber(5)">5</a></td>
+            <td><a id="number6" onclick="inputNumber(6)">6</a></td>
+        </tr>
+        <tr>
+            <td><a id="number7" onclick="inputNumber(7)">7</a></td>
+            <td><a id="number8" onclick="inputNumber(8)">8</a></td>
+            <td><a id="number9" onclick="inputNumber(9)">9</a></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><a id="number0" onclick="inputNumber(0)">0</a></td>
+            <td><a onclick="removeNumber()"><</a></td>
+        </tr>
+        <tr>
+            <td colspan="3" style="text-align: center"><a id="sendButton" onclick="makeAttempt()">Отправить</a></td>
+        </tr>
+    </table>
+</div>
+
+<div class="rightBlock">
+    <p>История ходов:</p>
+    <br>
+    <div class="history">
+        <p>Игра начата</p>
+        <p>Компьютер загадал число</p>
+    </div>
+</div>
+
+<script>
+    var numbers = [];
+    var attempts = 0;
+    var isGameFinished = false;
+
+    $(window).bind('beforeunload', function(){
+        if (attempts > 0 && !isGameFinished) return 'Вы действительно хотите покинуть игру?';
+    });
+
+    function inputNumber(x) {
+        if (numbers.length < 4) {
+            numbers.push(x);
+            $("#pin" + numbers.length).text(x);
+            $("#number" + x).css("pointer-events", "none").fadeTo("fast", 0.2);
+        }
+        if (numbers.length === 4) {
+            $("#sendButton").css("pointer-events", "auto").fadeTo("fast", 1.0);
+        }
+    }
+
+    function removeNumber() {
+        if (numbers.length > 0) {
+            $("#pin" + numbers.length).text("•");
+            $("#number" + numbers.pop()).css("pointer-events", "auto").fadeTo("fast", 1.0);
+            $("#sendButton").css("pointer-events", "none").fadeTo("fast", 0.5);
+        }
+    }
+
+    function makeAttempt() {
+        $.ajax({
+            url: "/makeAttempt",
+            data: {"numbers[]": numbers},
+            success: function(response) {
+                attempts++;
+                $('#attemptsLabel').text(attempts);
+                $('.history').prepend('<p>' +
+                    numbers[0] + numbers[1] + numbers[2] + numbers[3] + ' - ' +
+                    response.key + 'Б, ' + response.value + 'К</p>');
+                removeNumber();
+                removeNumber();
+                removeNumber();
+                removeNumber();
+                if (response.key === 4) congratulation();
+            },
+            error: function(xhr) {
+                alert('Произошла непредвиденная ошибка');
+            }
+        });
+    }
+    
+    function congratulation() {
+        isGameFinished = true;
+        alert('Вы угадали число! Количество попыток: ' + attempts + '.');
+        window.location.href = confirm('Начать новую игру?') ? "/" : "/rating";
+    }
+</script>
+
+</body>
+</html>

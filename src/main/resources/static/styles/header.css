@@ -1,0 +1,72 @@
+@import url(https://fonts.googleapis.com/css?family=Lato);
+
+body {
+    background: #00467F; /* fallback for old browsers */
+    background: -webkit-linear-gradient(to left, #A5CC82, #00467F); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to left, #A5CC82, #00467F); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    text-transform: uppercase;
+    color: white;
+    font-size: 18px;
+}
+
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    width: 100%;
+    background: white;
+    box-shadow: 0 3px 10px -2px rgba(0, 0, 0, .2);
+    text-align: center;
+}
+
+nav ul {
+    list-style: none;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 100%;
+}
+
+nav ul li {
+    display: inline-block;
+    transition: all .2s ease-in-out;
+}
+
+nav ul li:hover {
+    background: rgba(0, 0, 0, .15);
+}
+
+nav ul li:hover > ul {
+    display: block;
+}
+
+nav ul li a {
+    display: block;
+    padding: 25px 20px;
+    color: #222;
+    font-size: .9em;
+    letter-spacing: 1px;
+    text-decoration: none;
+}
+
+*, *:before, *:after {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    font-family: 'Lato', sans-serif;
+}
+
+.userBlock {
+    margin-top: 100px;
+    text-align: center;
+    background-color: white;
+    color: black;
+    width: 400px;
+    padding: 10px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.userBlock p, .userBlock a {
+    display: inline-block;
+}

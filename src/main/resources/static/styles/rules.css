@@ -1,0 +1,25 @@
+.aboutBlockHeader, .rulesBlockHeader, .aboutBlock, .rulesBlock {
+    margin-left: 20%;
+    margin-right: 20%;
+    line-height: 30px;
+}
+
+.aboutBlockHeader, .rulesBlockHeader{
+    text-align: center;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+}
+
+.aboutBlock, .rulesBlock {
+    text-align: left;
+    margin-bottom: 30px;
+    text-transform: none;
+}
+
+.aboutBlockHeader {
+    margin-top: 30px;
+}
+
+.rulesBlockHeader {
+    margin-top: 30px;
+}

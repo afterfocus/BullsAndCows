@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" th:href="@{styles/header.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{styles/rating.css}">
+    <script src="webjars/jquery/3.3.1/jquery.min.js"></script>
+    <title>Быки и коровы - Рейтинг</title>
+</head>
+<body>
+
+<div th:replace="fragments/header :: header"></div>
+
+<div class="bestPlayers">
+    <p>Лучшие игроки:</p>
+    <br>
+    <table id="bestPlayersTable">
+        <tr>
+            <th style="width: 37px">№</th>
+            <th>Игрок</th>
+            <th style="width: 110px">Сыграно</th>
+            <th style="width: 180px">Минимальное кол-во ходов</th>
+            <th style="width: 190px">Среднее кол-во ходов</th>
+        </tr>
+    </table>
+
+    <p>Вы:</p>
+    <br>
+    <table id="myTopPosition"></table>
+</div>
+
+<script>
+    $(function(){
+        $.getJSON('/rating/topUsers', function(data) {
+            $.each(data, function(key, topUser) {
+                $('#bestPlayersTable').append('<tr><td>' +
+                    (key + 1) + '</td><td>' +
+                    topUser.username + '</td><td>' +
+                    topUser.gamesPlayed + '</td><td>' +
+                    topUser.bestAttempts + '</td><td>' +
+                    Math.round(topUser.averageAttempts * 10) / 10 + '</td></tr>')
+            });
+        });
+
+        $.getJSON('/rating/myTopPosition', function(data) {
+            if (data.key === -1) {
+                $('#myTopPosition').append('<tr><td style="width: 37px">—</td>' +
+                    '<td style="min-width: 160px">' + data.value.username + '</td>' +
+                    '<td style="width: 110px">0</td>' +
+                    '<td style="width: 180px">—</td>' +
+                    '<td style="width: 190px">—</td></tr>')
+            } else {
+                $('#myTopPosition').append('<tr><td style="width: 37px">' +
+                    data.key + '</td><td style="min-width: 160px">' +
+                    data.value.username + '</td><td style="width: 110px">' +
+                    data.value.gamesPlayed + '</td><td style="width: 180px">' +
+                    data.value.bestAttempts + '</td><td style="width: 190px">' +
+                    Math.round(data.value.averageAttempts * 10) / 10 + '</td></tr>')
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
