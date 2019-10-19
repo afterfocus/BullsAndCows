@@ -18,7 +18,7 @@ public class ProfileController {
         this.gameHistoryRepository = gameHistoryRepository;
     }
 
-    @RequestMapping("/profile")
+    @GetMapping("/profile")
     public String get() {
         return "profile";
     }

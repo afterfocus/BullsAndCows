@@ -15,6 +15,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+    private final MyUserDetailsService userDetailsService;
+
+    public WebSecurityConfig(MyUserDetailsService userDetailsService) {
+        this.userDetailsService = userDetailsService;
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -31,24 +36,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         web.ignoring().antMatchers("/webjars/**", "/static/**");
     }
 
-
-    @Autowired
-    private MyUserDetailsService userDetailsService;
-
     @Override
     protected void configure(AuthenticationManagerBuilder auth)
             throws Exception {
         auth.userDetailsService(userDetailsService);
     }
-
-    /*
-    @Override
-    protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
-                .withUser("user1").password(passwordEncoder().encode("user1")).roles("USER")
-                .and()
-                .withUser("user2").password(passwordEncoder().encode("user2")).roles("USER");
-    }*/
 
     @Bean
     public PasswordEncoder passwordEncoder() {

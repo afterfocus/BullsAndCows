@@ -27,7 +27,7 @@ public class RegistrationController {
         return "registration";
     }
 
-    @RequestMapping(value = "/registration", method = RequestMethod.POST)
+    @PostMapping(value = "/registration")
     public String registerUserAccount(@ModelAttribute("user") @Valid User user, BindingResult result) {
         if (result.hasErrors() || !createUserAccount(user)) {
             result.rejectValue("username", "Это имя пользователя уже занято");

@@ -7,7 +7,6 @@ import java.util.Date;
 @Entity
 @Table(name = "GameHistory")
 public class GameHistory {
-
     @Id
     @GeneratedValue
     @Column(name = "Id", nullable = false)
@@ -30,6 +29,7 @@ public class GameHistory {
         this.id = id;
     }
 
+    // FIXME: 2019-10-19 Костыль
     public String getDate() {
         return new SimpleDateFormat("dd.MM.yyyy - HH:mm").format(date);
     }
