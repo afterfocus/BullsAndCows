@@ -1,6 +1,5 @@
 package com.bullsandcows.model;
 
-import javafx.util.Pair;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;

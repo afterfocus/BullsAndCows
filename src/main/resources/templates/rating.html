@@ -31,7 +31,7 @@
 
 <script>
     $(function(){
-        $.getJSON('/rating/topUsers', function(data) {
+        $.getJSON(location.href + '/topUsers', function(data) {
             $.each(data, function(key, topUser) {
                 $('#bestPlayersTable').append('<tr><td>' +
                     (key + 1) + '</td><td>' +
@@ -42,20 +42,20 @@
             });
         });
 
-        $.getJSON('/rating/myTopPosition', function(data) {
-            if (data.key === -1) {
+        $.getJSON(location.href + '/myTopPosition', function(data) {
+            if (data.first === -1) {
                 $('#myTopPosition').append('<tr><td style="width: 37px">—</td>' +
-                    '<td style="min-width: 160px">' + data.value.username + '</td>' +
+                    '<td style="min-width: 160px">' + data.second.username + '</td>' +
                     '<td style="width: 110px">0</td>' +
                     '<td style="width: 180px">—</td>' +
                     '<td style="width: 190px">—</td></tr>')
             } else {
                 $('#myTopPosition').append('<tr><td style="width: 37px">' +
-                    data.key + '</td><td style="min-width: 160px">' +
-                    data.value.username + '</td><td style="width: 110px">' +
-                    data.value.gamesPlayed + '</td><td style="width: 180px">' +
-                    data.value.bestAttempts + '</td><td style="width: 190px">' +
-                    Math.round(data.value.averageAttempts * 10) / 10 + '</td></tr>')
+                    data.first + '</td><td style="min-width: 160px">' +
+                    data.second.username + '</td><td style="width: 110px">' +
+                    data.second.gamesPlayed + '</td><td style="width: 180px">' +
+                    data.second.bestAttempts + '</td><td style="width: 190px">' +
+                    Math.round(data.second.averageAttempts * 10) / 10 + '</td></tr>')
             }
         });
     });

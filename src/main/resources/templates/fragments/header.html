@@ -8,16 +8,16 @@
 <div th:fragment="header">
     <nav>
         <ul>
-            <li><a href="/">Главная</a></li>
-            <li><a href="/rules">Правила</a></li>
-            <li><a href="/rating">Рейтинг</a></li>
-            <li><a href="/profile">Профиль</a></li>
+            <li><a th:href="@{/}">Главная</a></li>
+            <li><a th:href="@{/rules}">Правила</a></li>
+            <li><a th:href="@{/rating}">Рейтинг</a></li>
+            <li><a th:href="@{/profile}">Профиль</a></li>
         </ul>
     </nav>
 
     <div class="userBlock">
         <p id="username"><span sec:authentication="name"></span></p>
-        <a style="margin-left: 5px" href="/logout">[Выйти]</a>
+        <a style="margin-left: 5px" th:href="@{/logout}">[Выйти]</a>
     </div>
 </div>
 

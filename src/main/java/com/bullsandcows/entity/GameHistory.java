@@ -3,7 +3,6 @@ package com.bullsandcows.entity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.*;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Entity
@@ -31,7 +30,7 @@ public class GameHistory {
     public void setId(int id) {
         this.id = id;
     }
-    
+
     public Date getDate() {
         return date;
     }

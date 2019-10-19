@@ -9,10 +9,6 @@
 </head>
 <body>
 
-
-<!-- Стили и скрипты проверены в Safari и Google Chrome последних версий на Mac OS -->
-
-
 <div th:replace="fragments/header :: header"></div>
 
 <div class="numberOfMovesBlock">
@@ -66,7 +62,7 @@
     </div>
 </div>
 
-<script>
+<script th:inline="javascript">
     var numbers = [];
     var attempts = 0;
     var isGameFinished = false;
@@ -96,19 +92,19 @@
 
     function makeAttempt() {
         $.ajax({
-            url: "/makeAttempt",
+            url: location.href + "makeAttempt",
             data: {"numbers[]": numbers},
             success: function(response) {
                 attempts++;
                 $('#attemptsLabel').text(attempts);
                 $('.history').prepend('<p>' +
                     numbers[0] + numbers[1] + numbers[2] + numbers[3] + ' - ' +
-                    response.key + 'Б, ' + response.value + 'К</p>');
+                    response.first + 'Б, ' + response.second + 'К</p>');
                 removeNumber();
                 removeNumber();
                 removeNumber();
                 removeNumber();
-                if (response.key === 4) congratulation();
+                if (response.first === 4) congratulation();
             },
             error: function(xhr) {
                 alert('Произошла непредвиденная ошибка');

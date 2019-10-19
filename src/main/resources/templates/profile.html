@@ -27,7 +27,7 @@
 
 <script>
     $(function () {
-        $.getJSON('/profile/stats', function (data) {
+        $.getJSON(location.href + '/stats', function (data) {
             if (data.gamesPlayed === 0) {
                 $('#stats').append('Завершено игр: 0' +
                     '<br><br>Минимальное количество ходов: —' +
@@ -39,7 +39,7 @@
             }
         });
 
-        $.getJSON('/profile/gameHistory', function (data) {
+        $.getJSON(location.href + '/gameHistory', function (data) {
             $.each(data, function (key, game) {
                 $('#gameHistoryTable').append('<tr><td>' +
                     (key + 1) + '</td><td>' +

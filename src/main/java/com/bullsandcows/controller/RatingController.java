@@ -1,8 +1,8 @@
 package com.bullsandcows.controller;
 
+import com.bullsandcows.model.Pair;
 import com.bullsandcows.model.RatingUnit;
 import com.bullsandcows.repository.GameHistoryRepository;
-import javafx.util.Pair;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
