@@ -1,5 +1,7 @@
 package com.bullsandcows.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -13,6 +15,7 @@ public class GameHistory {
     private int id;
 
     @Column(name = "Date", nullable = false)
+    @JsonFormat(pattern="dd.MM.yyyy - HH:mm")
     private Date date;
 
     @Column(name = "Username", nullable = false)
@@ -28,10 +31,9 @@ public class GameHistory {
     public void setId(int id) {
         this.id = id;
     }
-
-    // FIXME: 2019-10-19 Костыль
-    public String getDate() {
-        return new SimpleDateFormat("dd.MM.yyyy - HH:mm").format(date);
+    
+    public Date getDate() {
+        return date;
     }
 
     public void setDate(Date date) {
