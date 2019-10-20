@@ -2,6 +2,9 @@ package com.bullsandcows.entity;
 
 import javax.persistence.*;
 
+/**
+ * Сущность базы данных для сохранения пользователей
+ */
 @Entity
 @Table(name = "User")
 public class User {

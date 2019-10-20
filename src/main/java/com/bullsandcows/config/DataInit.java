@@ -13,6 +13,9 @@ import org.springframework.stereotype.Component;
 import java.util.Date;
 import java.util.Random;
 
+/**
+ * Класс для заполнения in-memory базы данных
+ */
 @Component
 public class DataInit implements ApplicationRunner {
     private PasswordEncoder passwordEncoder;
@@ -46,15 +49,15 @@ public class DataInit implements ApplicationRunner {
 
             Random R = new Random();
             GameHistory history;
-            for(int i = 0; i < R.nextInt(10) + 5; i++) {
+            for (int i = 0; i < R.nextInt(10) + 5; i++) {
                 history = new GameHistory();
                 history.setDate(new Date(new Date().getTime() - R.nextInt(2_000_000_000)));
                 history.setUsername("AfterFocus");
-                history.setAttempts(R.nextInt(20) + 5);
+                history.setAttempts(R.nextInt(15) + 6);
                 gameHistoryRepository.save(history);
             }
 
-            for(int i = 0; i < R.nextInt(15) + 20; i++) {
+            for (int i = 0; i < R.nextInt(15) + 20; i++) {
                 history = new GameHistory();
                 history.setDate(new Date(new Date().getTime() - R.nextInt(2_000_000_000)));
                 history.setUsername("EvilYou");
@@ -62,7 +65,7 @@ public class DataInit implements ApplicationRunner {
                 gameHistoryRepository.save(history);
             }
 
-            for(int i = 0; i < R.nextInt(15) + 15; i++) {
+            for (int i = 0; i < R.nextInt(15) + 15; i++) {
                 history = new GameHistory();
                 history.setDate(new Date(new Date().getTime() - R.nextInt(2_000_000_000)));
                 history.setUsername("Tourmaline[UNO]");

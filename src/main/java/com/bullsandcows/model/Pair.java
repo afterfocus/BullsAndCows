@@ -1,5 +1,8 @@
 package com.bullsandcows.model;
 
+/**
+ * Класс для передачи парных значений (<Число быков, Число коров>, <Позиция в рейтинге, Статистика>...)
+ */
 public class Pair<A, B> {
     private final A first;
     private final B second;

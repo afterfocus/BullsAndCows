@@ -63,26 +63,40 @@
 </div>
 
 <script th:inline="javascript">
+    /** Цифры, введённые пользователем */
     var numbers = [];
+    /** Количество совершенных попыток */
     var attempts = 0;
+    /** Закончена ли игра */
     var isGameFinished = false;
 
+    /** Предупреждение о выходе из игры */
     $(window).bind('beforeunload', function(){
         if (attempts > 0 && !isGameFinished) return 'Вы действительно хотите покинуть игру?';
     });
 
+    /**
+     * Нажатие на цифру
+     * @param x нажатая цифра
+     */
     function inputNumber(x) {
+        // Если введено меньше 4 цифр, заблокировать нажатую цифру и добавить ее к числу пользователя
         if (numbers.length < 4) {
             numbers.push(x);
             $("#pin" + numbers.length).text(x);
             $("#number" + x).css("pointer-events", "none").fadeTo("fast", 0.2);
         }
+        // Если введены все 4 цифры, разблокировать кнопку отправки
         if (numbers.length === 4) {
             $("#sendButton").css("pointer-events", "auto").fadeTo("fast", 1.0);
         }
     }
 
+    /**
+     * Нажатие на кнопку "стереть"
+     */
     function removeNumber() {
+        // Если введена хотя-бы одна цифра, удалить последнюю цифру из числа и разблокировать её кнопку
         if (numbers.length > 0) {
             $("#pin" + numbers.length).text("•");
             $("#number" + numbers.pop()).css("pointer-events", "auto").fadeTo("fast", 1.0);
@@ -90,6 +104,9 @@
         }
     }
 
+    /**
+     * Отправить попытку угадать число
+     */
     function makeAttempt() {
         $.ajax({
             url: location.href + "makeAttempt",
@@ -97,21 +114,27 @@
             success: function(response) {
                 attempts++;
                 $('#attemptsLabel').text(attempts);
+                // Отобразить ход в логе
                 $('.history').prepend('<p>' +
                     numbers[0] + numbers[1] + numbers[2] + numbers[3] + ' - ' +
                     response.first + 'Б, ' + response.second + 'К</p>');
+                // Сбросить интерфейс набора числа
                 removeNumber();
                 removeNumber();
                 removeNumber();
                 removeNumber();
+                // Если число угадано, завершить игру
                 if (response.first === 4) congratulation();
             },
-            error: function(xhr) {
+            error: function() {
                 alert('Произошла непредвиденная ошибка');
             }
         });
     }
-    
+
+    /**
+     * Завершение игры
+     */
     function congratulation() {
         isGameFinished = true;
         alert('Вы угадали число! Количество попыток: ' + attempts + '.');

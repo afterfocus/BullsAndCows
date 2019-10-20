@@ -26,6 +26,9 @@
 </div>
 
 <script>
+    /**
+     * Получить статистику и историю игр пользователя
+     */
     $(function () {
         $.getJSON(location.href + '/stats', function (data) {
             if (data.gamesPlayed === 0) {

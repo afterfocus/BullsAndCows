@@ -30,6 +30,9 @@
 </div>
 
 <script>
+    /**
+     * Получить рейтинг игроков
+     */
     $(function(){
         $.getJSON(location.href + '/topUsers', function(data) {
             $.each(data, function(key, topUser) {
